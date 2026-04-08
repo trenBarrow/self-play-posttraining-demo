@@ -1,0 +1,66 @@
+schema_version: red_action_space.v1
+record_kind: red_action_space
+transcript_schema_version: red_command_transcript.v1
+protocol_modes:
+  - fprime
+  - mavlink
+  - mixed
+current_context_fields:
+  - protocol_family
+  - platform_family
+  - mission_phase
+  - window_class
+warm_start:
+  source: seeded_cyber_schedule_generators
+  default_protocol_mode: mixed
+  default_rows_per_protocol: 96
+action_heads:
+  command_family:
+    allowed_values:
+      - read_only_inspection
+      - transient_control
+      - mission_sequence_control
+      - persistent_configuration
+      - file_payload_management
+      - communications_control
+      - safety_critical_control
+      - maintenance_admin
+  timing_bucket:
+    allowed_values:
+      - bootstrap
+      - rapid
+      - steady
+      - delayed
+    thresholds_seconds:
+      rapid_max: 5
+      steady_max: 30
+  identity_bucket:
+    allowed_values:
+      - external_low
+      - shared_identity
+    protocol_services:
+      fprime:
+        external_low:
+          - red_a1
+          - red_a2
+          - red_b1
+          - red_b2
+        shared_identity:
+          - ops_a1
+          - ops_a2
+          - ops_b1
+          - ops_b2
+      mavlink:
+        external_low:
+          - red_primary
+          - red_secondary
+        shared_identity:
+          - ops_primary
+          - ops_secondary
+window_class_by_phase:
+  startup: startup_window
+  science: active_ops_window
+  mission: active_ops_window
+  downlink: transfer_window
+  recovery: transfer_window
+  standby: quiet_window

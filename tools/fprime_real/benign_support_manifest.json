@@ -1,0 +1,152 @@
+[
+  {
+    "command": "cmdDisp.CMD_NO_OP",
+    "arguments": [],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "cmdDisp.CMD_NO_OP_STRING",
+    "arguments": ["OPS_PROBE_0001"],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "cmdDisp.CMD_TEST_CMD_1",
+    "arguments": ["-86", "-1.80", "6"],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "cmdDisp.CMD_CLEAR_TRACKING",
+    "arguments": [],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "systemResources.VERSION",
+    "arguments": [],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "eventLogger.DUMP_FILTER_STATE",
+    "arguments": [],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "cmdSeq.CS_AUTO",
+    "arguments": [],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "cmdSeq.CS_MANUAL",
+    "arguments": [],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "prmDb.PRM_SAVE_FILE",
+    "arguments": [],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "fileManager.FileSize",
+    "arguments": ["/workspace/README.md"],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "fileManager.CreateDirectory",
+    "arguments": ["/tmp/fprime_benign/support_created_dir"],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "fileManager.RemoveDirectory",
+    "arguments": ["/tmp/fprime_benign/remove_ready_dir"],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "fileDownlink.SendPartial",
+    "arguments": ["/workspace/README.md", "ops_probe_partial.bin", "0", "512"],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "fileDownlink.SendFile",
+    "arguments": ["/workspace/README.md", "ops_probe_full.bin"],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  },
+  {
+    "command": "fileDownlink.Cancel",
+    "arguments": [],
+    "required_observability": {
+      "request_wire": true,
+      "op_dispatched": true,
+      "terminal_event": true,
+      "telemetry_recent": true
+    }
+  }
+]

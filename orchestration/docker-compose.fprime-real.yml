@@ -1,0 +1,162 @@
+name: anomaly-detector-fprime-real
+
+services:
+  fprime_a:
+    image: nasafprime/fprime-arm:latest
+    platform: linux/amd64
+    container_name: anomaly_fprime_real_a
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["/workspace/scripts/fprime_real/run_node.sh --node a"]
+    volumes:
+      - ..:/workspace
+      - ${FPRIME_RUNTIME_HOST_ROOT:-../gds/fprime_runtime}:/runtime_root
+    environment:
+      FPRIME_RUNTIME_ROOT: /runtime_root
+    networks:
+      fprime_real_net:
+        ipv4_address: 192.168.144.2
+    ports:
+      - "15050:50050/tcp"
+      - "15001:5000/tcp"
+    restart: unless-stopped
+
+  fprime_b:
+    image: nasafprime/fprime-arm:latest
+    platform: linux/amd64
+    container_name: anomaly_fprime_real_b
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["/workspace/scripts/fprime_real/run_node.sh --node b"]
+    volumes:
+      - ..:/workspace
+      - ${FPRIME_RUNTIME_HOST_ROOT:-../gds/fprime_runtime}:/runtime_root
+    environment:
+      FPRIME_RUNTIME_ROOT: /runtime_root
+    networks:
+      fprime_real_net:
+        ipv4_address: 192.168.144.3
+    ports:
+      - "16050:50050/tcp"
+      - "16001:5000/tcp"
+    restart: unless-stopped
+
+  ops_a1:
+    image: nasafprime/fprime-arm:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${FPRIME_RUNTIME_HOST_ROOT:-../gds/fprime_runtime}:/runtime_root
+    networks:
+      fprime_real_net:
+        ipv4_address: 192.168.144.12
+    restart: unless-stopped
+
+  ops_a2:
+    image: nasafprime/fprime-arm:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${FPRIME_RUNTIME_HOST_ROOT:-../gds/fprime_runtime}:/runtime_root
+    networks:
+      fprime_real_net:
+        ipv4_address: 192.168.144.13
+    restart: unless-stopped
+
+  ops_b1:
+    image: nasafprime/fprime-arm:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${FPRIME_RUNTIME_HOST_ROOT:-../gds/fprime_runtime}:/runtime_root
+    networks:
+      fprime_real_net:
+        ipv4_address: 192.168.144.22
+    restart: unless-stopped
+
+  ops_b2:
+    image: nasafprime/fprime-arm:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${FPRIME_RUNTIME_HOST_ROOT:-../gds/fprime_runtime}:/runtime_root
+    networks:
+      fprime_real_net:
+        ipv4_address: 192.168.144.23
+    restart: unless-stopped
+
+  red_a1:
+    image: nasafprime/fprime-arm:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${FPRIME_RUNTIME_HOST_ROOT:-../gds/fprime_runtime}:/runtime_root
+    networks:
+      fprime_real_net:
+        ipv4_address: 192.168.144.31
+    restart: unless-stopped
+
+  red_a2:
+    image: nasafprime/fprime-arm:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${FPRIME_RUNTIME_HOST_ROOT:-../gds/fprime_runtime}:/runtime_root
+    networks:
+      fprime_real_net:
+        ipv4_address: 192.168.144.32
+    restart: unless-stopped
+
+  red_b1:
+    image: nasafprime/fprime-arm:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${FPRIME_RUNTIME_HOST_ROOT:-../gds/fprime_runtime}:/runtime_root
+    networks:
+      fprime_real_net:
+        ipv4_address: 192.168.144.41
+    restart: unless-stopped
+
+  red_b2:
+    image: nasafprime/fprime-arm:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${FPRIME_RUNTIME_HOST_ROOT:-../gds/fprime_runtime}:/runtime_root
+    networks:
+      fprime_real_net:
+        ipv4_address: 192.168.144.42
+    restart: unless-stopped
+
+networks:
+  fprime_real_net:
+    name: fprime_real_net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.144.0/24

@@ -1,0 +1,87 @@
+schema_version: blue_feature_denylist.v1
+profiles:
+  poster_blue_default:
+    description: >
+      Poster-default denylist. These fields either leak protocol identity, reveal
+      post-request outcomes, carry labels/provenance only, or encode outputs from
+      legacy auxiliary detectors.
+    forbidden_features:
+      protocol_family: Audit-only protocol lineage; do not let the blue model memorize the stack family.
+      protocol_version: Audit-only protocol version metadata.
+      run_id: Reproducibility grouping only; not a learned semantic feature.
+      episode_id: Reproducibility grouping only; not a learned semantic feature.
+      actor_context.trust_score: Raw numeric trust is audit-only in the poster path; use trust_class instead.
+      label: Ground-truth label leakage.
+      label_name: Ground-truth label leakage.
+      attack_family: Evaluation metadata leakage.
+      actor: Raw actor identifier leakage.
+      actor_role: Legacy raw role surface; use actor_context.role instead.
+      service_id: Raw F´ service identifier leakage.
+      command_id: Raw F´ command identifier leakage.
+      target_node_id: Raw F´ node identifier leakage.
+      req_bytes: Legacy raw request transport field; poster path must use canonical features only.
+      actor_trust: Legacy raw trust scalar; poster path must use trust_class instead.
+      arg_count: Legacy flat argument summary; poster path must use canonical argument_profile fields.
+      arg_norm: Legacy flat argument summary; poster path must use canonical argument_profile fields.
+      arg_out_of_range: Legacy flat argument summary; poster path must use canonical argument_profile fields.
+      resp_bytes: Response-only transport outcome.
+      latency_ms: Response-only timing outcome.
+      gds_accept: Terminal acknowledgement unavailable at request time.
+      sat_success: Terminal execution outcome unavailable at request time.
+      timeout: Terminal outcome unavailable at request time.
+      response_code: Terminal outcome unavailable at request time.
+      request_to_uplink_ms: Future timing not available at request time.
+      uplink_to_sat_response_ms: Future timing not available at request time.
+      sat_response_to_final_ms: Future timing not available at request time.
+      response_direction_seen: Response-only evidence.
+      final_observed_on_wire: Response-only provenance.
+      txn_warning_events: Response-only terminal event summary.
+      txn_error_events: Response-only terminal event summary.
+      packet_gap_ms: Legacy history feature; poster path must use canonical recent_behavior fields instead.
+      command_rate_1m: Legacy history feature; poster path must use canonical recent_behavior fields instead.
+      error_rate_1m: Legacy history feature; poster path must use canonical recent_behavior fields instead.
+      panomaly: Legacy auxiliary model output.
+      pcyber: Legacy auxiliary model output.
+      rules: Legacy rule-stack output.
+      novelty: Legacy novelty-model output.
+    forbidden_prefixes:
+      audit_context.: Raw identifiers, labels, and provenance retained only for audit and replay.
+      observability.: Packet/log observability facts are audit-only and may depend on post-request evidence.
+      target_: Raw F´ telemetry vocabulary leakage.
+      peer_: Raw F´ telemetry vocabulary leakage.
+      fprime_: Raw F´-specific naming leakage.
+      mavlink_: Raw MAVLink enum/value leakage.
+      native_: Native replay fields are forensic only, not learned inputs.
+      raw_: Raw protocol-native values are forensic only, not learned inputs.
+  legacy_request_time_baseline:
+    description: >
+      Legacy F´ request-time denylist. This keeps the inherited training path honest
+      about excluding response/history leakage and detector-output feedback, while
+      still allowing the old request-time F´ feature surface.
+    forbidden_features:
+      resp_bytes: Response-only transport outcome.
+      latency_ms: Response-only timing outcome.
+      gds_accept: Terminal acknowledgement unavailable at request time.
+      sat_success: Terminal execution outcome unavailable at request time.
+      timeout: Terminal outcome unavailable at request time.
+      response_code: Terminal outcome unavailable at request time.
+      request_to_uplink_ms: Future timing not available at request time.
+      uplink_to_sat_response_ms: Future timing not available at request time.
+      sat_response_to_final_ms: Future timing not available at request time.
+      response_direction_seen: Response-only evidence.
+      final_observed_on_wire: Response-only provenance.
+      txn_warning_events: Response-only terminal event summary.
+      txn_error_events: Response-only terminal event summary.
+      packet_gap_ms: Rolling history feature not allowed in the primary legacy request-time model.
+      command_rate_1m: Rolling history feature not allowed in the primary legacy request-time model.
+      error_rate_1m: Rolling history feature not allowed in the primary legacy request-time model.
+      label: Ground-truth label leakage.
+      label_name: Ground-truth label leakage.
+      attack_family: Evaluation metadata leakage.
+      panomaly: Legacy auxiliary model output must not feed the primary learned model.
+      pcyber: Legacy auxiliary model output must not feed the primary learned model.
+      rules: Legacy rule-stack output must not feed the primary learned model.
+      novelty: Legacy novelty-model output must not feed the primary learned model.
+    forbidden_prefixes:
+      audit_context.: Audit-only identifiers and provenance.
+      observability.: Audit-only packet/log observability summaries.

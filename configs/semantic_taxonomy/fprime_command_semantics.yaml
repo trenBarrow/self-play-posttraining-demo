@@ -1,0 +1,121 @@
+schema_version: fprime_command_semantics.v1
+protocol_family: fprime
+support_status: implemented_today
+commands:
+  cmdDisp.CMD_NO_OP:
+    canonical_command_name: noop_ping
+    canonical_command_family: read_only_inspection
+    authority_level: operator
+    summary: Liveness or plumbing no-op used to verify the command path.
+  cmdDisp.CMD_NO_OP_STRING:
+    canonical_command_name: noop_echo
+    canonical_command_family: read_only_inspection
+    authority_level: operator
+    summary: Parameterized no-op used to verify the command path with simple arguments.
+  cmdDisp.CMD_TEST_CMD_1:
+    canonical_command_name: diagnostic_test_invoke
+    canonical_command_family: maintenance_admin
+    safety_criticality: medium
+    authority_level: operator
+    summary: Diagnostic test command used to exercise command routing and argument handling.
+  cmdDisp.CMD_UNKNOWN_PROBE:
+    canonical_command_name: dispatch_opcode_probe
+    canonical_command_family: read_only_inspection
+    safety_criticality: medium
+    authority_level: operator
+    summary: Probes command-dispatch handling for an unsupported opcode without relying on a valid operational command.
+  cmdDisp.CMD_CLEAR_TRACKING:
+    canonical_command_name: tracking_reset
+    canonical_command_family: transient_control
+    target_scope: subsystem
+    summary: Clears transient tracking state without changing long-lived configuration.
+  cmdSeq.CS_AUTO:
+    canonical_command_name: sequence_mode_auto
+    canonical_command_family: mission_sequence_control
+    summary: Switches command sequencing into automatic execution mode.
+  cmdSeq.CS_MANUAL:
+    canonical_command_name: sequence_mode_manual
+    canonical_command_family: mission_sequence_control
+    summary: Switches command sequencing into manual execution mode.
+  cmdSeq.CS_STEP:
+    canonical_command_name: sequence_step
+    canonical_command_family: mission_sequence_control
+    summary: Advances sequence execution by one coordinated step.
+  cmdSeq.CS_START:
+    canonical_command_name: sequence_start
+    canonical_command_family: mission_sequence_control
+    summary: Starts sequence execution for a prepared command plan.
+  cmdSeq.CS_VALIDATE:
+    canonical_command_name: sequence_validate
+    canonical_command_family: read_only_inspection
+    target_scope: subsystem
+    summary: Validates a sequence plan without directly executing it.
+  cmdSeq.CS_CANCEL:
+    canonical_command_name: sequence_cancel
+    canonical_command_family: mission_sequence_control
+    summary: Cancels an in-flight or pending sequence.
+  cmdSeq.CS_JOIN_WAIT:
+    canonical_command_name: sequence_join_wait
+    canonical_command_family: mission_sequence_control
+    summary: Coordinates sequence progress with a wait or join point.
+  eventLogger.DUMP_FILTER_STATE:
+    canonical_command_name: event_filter_state_dump
+    canonical_command_family: read_only_inspection
+    target_scope: subsystem
+    summary: Dumps current event logger filter state for inspection.
+  prmDb.PRM_SAVE_FILE:
+    canonical_command_name: parameter_store_save
+    canonical_command_family: persistent_configuration
+    target_scope: subsystem
+    summary: Persists parameter database state to durable storage.
+  systemResources.VERSION:
+    canonical_command_name: version_query
+    canonical_command_family: read_only_inspection
+    target_scope: single_component
+    summary: Queries software or build version state from the system resources component.
+  fileManager.CreateDirectory:
+    canonical_command_name: directory_create
+    canonical_command_family: file_payload_management
+    summary: Creates a new persistent directory in managed storage.
+  fileManager.ShellCommand:
+    canonical_command_name: maintenance_shell_invoke
+    canonical_command_family: maintenance_admin
+    safety_criticality: critical
+    summary: Executes an administrative shell action with broad maintenance impact.
+  fileManager.FileSize:
+    canonical_command_name: file_size_query
+    canonical_command_family: read_only_inspection
+    target_scope: subsystem
+    summary: Queries metadata about a managed file without changing stored data.
+  fileManager.AppendFile:
+    canonical_command_name: file_append
+    canonical_command_family: file_payload_management
+    summary: Appends managed file contents and changes persistent stored data.
+  fileManager.MoveFile:
+    canonical_command_name: file_move
+    canonical_command_family: file_payload_management
+    summary: Relocates a managed file within persistent storage.
+  fileManager.RemoveFile:
+    canonical_command_name: file_remove
+    canonical_command_family: file_payload_management
+    safety_criticality: high
+    summary: Deletes a managed file from persistent storage.
+  fileManager.RemoveDirectory:
+    canonical_command_name: directory_remove
+    canonical_command_family: file_payload_management
+    safety_criticality: high
+    summary: Removes a managed directory from persistent storage.
+  fileDownlink.SendPartial:
+    canonical_command_name: partial_downlink_start
+    canonical_command_family: file_payload_management
+    target_scope: external_link
+    summary: Starts a partial managed file transfer to an external receiver.
+  fileDownlink.SendFile:
+    canonical_command_name: file_downlink_start
+    canonical_command_family: file_payload_management
+    target_scope: external_link
+    summary: Starts a full managed file transfer to an external receiver.
+  fileDownlink.Cancel:
+    canonical_command_name: downlink_cancel
+    canonical_command_family: communications_control
+    summary: Cancels an active transfer or downlink coordination session.

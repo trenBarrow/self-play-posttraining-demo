@@ -1,0 +1,65 @@
+schema_version: canonical_command_families.v1
+families:
+  read_only_inspection:
+    description: Inspect or query system state without intentionally changing persistent or mission state.
+    default_mutation_scope: observation_only
+    default_persistence_class: none
+    default_safety_criticality: low
+    default_authority_level: observer
+    default_target_scope: single_component
+  transient_control:
+    description: Apply an immediate but non-persistent control action to one subsystem or component.
+    default_mutation_scope: ephemeral_control
+    default_persistence_class: none
+    default_safety_criticality: medium
+    default_authority_level: operator
+    default_target_scope: single_component
+  mission_sequence_control:
+    description: Change mission flow, execution mode, or other coordinated operational sequencing state.
+    default_mutation_scope: workflow_control
+    default_persistence_class: session
+    default_safety_criticality: high
+    default_authority_level: operator
+    default_target_scope: subsystem
+  persistent_configuration:
+    description: Change configuration or reference data that persists beyond the immediate command window.
+    default_mutation_scope: persistent_change
+    default_persistence_class: persistent
+    default_safety_criticality: high
+    default_authority_level: privileged_operator
+    default_target_scope: subsystem
+  file_payload_management:
+    description: Move, create, remove, or transfer files, payload products, or mission data artifacts.
+    default_mutation_scope: data_management
+    default_persistence_class: persistent
+    default_safety_criticality: medium
+    default_authority_level: privileged_operator
+    default_target_scope: subsystem
+  communications_control:
+    description: Control link behavior, transfer sessions, or transport-layer coordination state.
+    default_mutation_scope: link_control
+    default_persistence_class: session
+    default_safety_criticality: medium
+    default_authority_level: operator
+    default_target_scope: external_link
+  safety_critical_control:
+    description: Directly influence vehicle, platform, or actuator safety state with high operational consequence.
+    default_mutation_scope: actuator_or_platform_control
+    default_persistence_class: session
+    default_safety_criticality: critical
+    default_authority_level: privileged_operator
+    default_target_scope: platform
+  maintenance_admin:
+    description: Perform maintenance, diagnostics, or administrative actions that can materially affect runtime behavior.
+    default_mutation_scope: maintenance_operation
+    default_persistence_class: session
+    default_safety_criticality: high
+    default_authority_level: privileged_operator
+    default_target_scope: subsystem
+  other_or_unknown:
+    description: Explicit fallback for unsupported, uncategorized, or still-unmapped commands.
+    default_mutation_scope: unknown
+    default_persistence_class: unknown
+    default_safety_criticality: unknown
+    default_authority_level: unknown
+    default_target_scope: unspecified

@@ -1,0 +1,96 @@
+schema_version: mavlink_command_semantics.v1
+protocol_family: mavlink
+support_status: planned_real_path
+planned_stack: ArduPilot_SITL_MAVProxy
+commands:
+  MAV_CMD_COMPONENT_ARM_DISARM:
+    canonical_command_name: arm_state_change
+    canonical_command_family: safety_critical_control
+    summary: Changes platform arming state and directly affects safety posture.
+  MAV_CMD_NAV_TAKEOFF:
+    canonical_command_name: takeoff
+    canonical_command_family: mission_sequence_control
+    safety_criticality: critical
+    target_scope: platform
+    summary: Initiates takeoff as a high-consequence mission-state transition.
+  MAV_CMD_NAV_LAND:
+    canonical_command_name: land
+    canonical_command_family: mission_sequence_control
+    safety_criticality: critical
+    target_scope: platform
+    summary: Initiates landing as a high-consequence mission-state transition.
+  MAV_CMD_NAV_RETURN_TO_LAUNCH:
+    canonical_command_name: return_to_launch
+    canonical_command_family: mission_sequence_control
+    safety_criticality: critical
+    target_scope: platform
+    summary: Commands autonomous return-to-launch behavior.
+  MAV_CMD_MISSION_START:
+    canonical_command_name: mission_start
+    canonical_command_family: mission_sequence_control
+    target_scope: platform
+    summary: Starts execution of a prepared mission plan.
+  MAV_CMD_DO_SET_MODE:
+    canonical_command_name: vehicle_mode_change
+    canonical_command_family: mission_sequence_control
+    target_scope: platform
+    summary: Changes vehicle operating mode or control regime.
+  MAV_CMD_DO_CHANGE_SPEED:
+    canonical_command_name: speed_change
+    canonical_command_family: transient_control
+    safety_criticality: high
+    target_scope: platform
+    summary: Changes commanded speed without persisting a new configuration baseline.
+  MAV_CMD_DO_SET_HOME:
+    canonical_command_name: home_reference_set
+    canonical_command_family: persistent_configuration
+    target_scope: platform
+    summary: Changes the stored home reference used by mission behaviors.
+  MAV_CMD_DO_REPOSITION:
+    canonical_command_name: reposition
+    canonical_command_family: transient_control
+    safety_criticality: high
+    target_scope: platform
+    summary: Repositions the vehicle without rewriting long-lived configuration.
+  MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN:
+    canonical_command_name: preflight_reboot_or_shutdown
+    canonical_command_family: maintenance_admin
+    safety_criticality: critical
+    target_scope: platform
+    summary: Performs a maintenance reboot or shutdown action on the platform.
+  REQUEST_AUTOPILOT_CAPABILITIES:
+    canonical_command_name: capability_query
+    canonical_command_family: read_only_inspection
+    target_scope: platform
+    summary: Requests capability metadata without changing vehicle state.
+  PARAM_REQUEST_READ:
+    canonical_command_name: parameter_query
+    canonical_command_family: read_only_inspection
+    target_scope: subsystem
+    summary: Requests one configuration parameter value for inspection.
+  PARAM_REQUEST_LIST:
+    canonical_command_name: parameter_inventory_query
+    canonical_command_family: read_only_inspection
+    target_scope: subsystem
+    summary: Requests the current parameter inventory for inspection.
+  PARAM_SET:
+    canonical_command_name: parameter_set
+    canonical_command_family: persistent_configuration
+    target_scope: subsystem
+    summary: Changes a persistent configuration parameter.
+  MISSION_REQUEST_LIST:
+    canonical_command_name: mission_inventory_query
+    canonical_command_family: read_only_inspection
+    target_scope: subsystem
+    summary: Requests current mission item inventory for inspection.
+  MISSION_CLEAR_ALL:
+    canonical_command_name: mission_clear
+    canonical_command_family: mission_sequence_control
+    persistence_class: persistent
+    target_scope: subsystem
+    summary: Clears stored mission items and changes planned mission state.
+  FILE_TRANSFER_PROTOCOL:
+    canonical_command_name: file_transfer_session
+    canonical_command_family: file_payload_management
+    target_scope: external_link
+    summary: Starts or advances a file-transfer microservice session.

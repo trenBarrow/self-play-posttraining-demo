@@ -1,0 +1,608 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://poster.local/schemas/canonical_command_row.schema.json",
+  "title": "Canonical Command Row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_kind",
+    "platform_family",
+    "protocol_family",
+    "protocol_version",
+    "run_id",
+    "episode_id",
+    "actor_context",
+    "mission_context",
+    "command_semantics",
+    "argument_profile",
+    "normalized_state",
+    "recent_behavior",
+    "observability",
+    "audit_context"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "canonical_command_row.v3"
+    },
+    "record_kind": {
+      "const": "canonical_command_row"
+    },
+    "platform_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "run_id": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "episode_id": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "actor_context": {
+      "$ref": "#/$defs/actorContext"
+    },
+    "mission_context": {
+      "$ref": "#/$defs/missionContext"
+    },
+    "command_semantics": {
+      "$ref": "#/$defs/commandSemantics"
+    },
+    "argument_profile": {
+      "$ref": "#/$defs/argumentProfile"
+    },
+    "normalized_state": {
+      "$ref": "#/$defs/normalizedState"
+    },
+    "recent_behavior": {
+      "$ref": "#/$defs/recentBehavior"
+    },
+    "observability": {
+      "$ref": "#/$defs/observability"
+    },
+    "audit_context": {
+      "$ref": "#/$defs/auditContext"
+    }
+  },
+  "$defs": {
+    "actorContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "trust_score",
+        "trust_class"
+      ],
+      "properties": {
+        "role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trust_score": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "trust_class": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "missionContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mission_phase",
+        "window_class"
+      ],
+      "properties": {
+        "mission_phase": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "window_class": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "commandSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonical_command_name",
+        "canonical_command_family",
+        "mutation_scope",
+        "persistence_class",
+        "safety_criticality",
+        "authority_level",
+        "target_scope"
+      ],
+      "properties": {
+        "canonical_command_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "canonical_command_family": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mutation_scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "persistence_class": {
+          "type": "string",
+          "minLength": 1
+        },
+        "safety_criticality": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authority_level": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_scope": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "argumentProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "has_arguments",
+        "argument_leaf_count",
+        "numeric_argument_count",
+        "string_argument_count",
+        "boolean_argument_count",
+        "collection_argument_count",
+        "null_argument_count",
+        "numeric_magnitude_l1"
+      ],
+      "properties": {
+        "has_arguments": {
+          "type": "boolean"
+        },
+        "argument_leaf_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "numeric_argument_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "string_argument_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "boolean_argument_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "collection_argument_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "null_argument_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "numeric_magnitude_l1": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "normalizedState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state_available",
+        "target_state_present",
+        "peer_state_present",
+        "target_compute_load_ratio",
+        "peer_compute_load_ratio",
+        "target_compute_peak_load_ratio",
+        "peer_compute_peak_load_ratio",
+        "target_compute_imbalance_ratio",
+        "peer_compute_imbalance_ratio",
+        "target_storage_io_pressure_ratio",
+        "peer_storage_io_pressure_ratio",
+        "target_command_activity_ratio",
+        "peer_command_activity_ratio",
+        "target_command_error_ratio",
+        "peer_command_error_ratio",
+        "target_service_issue_ratio",
+        "peer_service_issue_ratio",
+        "target_queue_pressure_ratio",
+        "peer_queue_pressure_ratio",
+        "target_scheduler_pressure_ratio",
+        "peer_scheduler_pressure_ratio",
+        "target_link_pressure_ratio",
+        "peer_link_pressure_ratio",
+        "target_power_pressure_ratio",
+        "peer_power_pressure_ratio",
+        "target_control_instability_ratio",
+        "peer_control_instability_ratio",
+        "target_navigation_uncertainty_ratio",
+        "peer_navigation_uncertainty_ratio",
+        "target_telemetry_staleness_ratio",
+        "peer_telemetry_staleness_ratio"
+      ],
+      "properties": {
+        "state_available": {
+          "type": "boolean"
+        },
+        "target_state_present": {
+          "type": "boolean"
+        },
+        "peer_state_present": {
+          "type": "boolean"
+        },
+        "target_compute_load_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_compute_load_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_compute_peak_load_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_compute_peak_load_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_compute_imbalance_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_compute_imbalance_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_storage_io_pressure_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_storage_io_pressure_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_command_activity_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_command_activity_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_command_error_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_command_error_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_service_issue_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_service_issue_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_queue_pressure_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_queue_pressure_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_scheduler_pressure_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_scheduler_pressure_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_link_pressure_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_link_pressure_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_power_pressure_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_power_pressure_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_control_instability_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_control_instability_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_navigation_uncertainty_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_navigation_uncertainty_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_telemetry_staleness_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "peer_telemetry_staleness_ratio": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "recentBehavior": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_rate_1m",
+        "error_rate_1m",
+        "repeat_command_count_10m",
+        "same_target_command_rate_1m"
+      ],
+      "properties": {
+        "command_rate_1m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "error_rate_1m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "repeat_command_count_10m": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "same_target_command_rate_1m": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "observability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "related_packet_count",
+        "request_wire_observed",
+        "response_wire_observed",
+        "correlated_response_observed",
+        "observed_message_families",
+        "observed_message_stages"
+      ],
+      "properties": {
+        "related_packet_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "request_wire_observed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "response_wire_observed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "correlated_response_observed": {
+          "type": "boolean"
+        },
+        "observed_message_families": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "observed_message_stages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "auditContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actor_id",
+        "target_id",
+        "session_id",
+        "transaction_id",
+        "send_id",
+        "raw_command_name",
+        "raw_service_name",
+        "source_artifact_paths",
+        "label",
+        "label_name",
+        "attack_family"
+      ],
+      "properties": {
+        "actor_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "session_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "transaction_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "send_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "raw_command_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "raw_service_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_artifact_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "label": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "label_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attack_family": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

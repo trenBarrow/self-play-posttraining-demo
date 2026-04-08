@@ -1,0 +1,116 @@
+name: anomaly-detector-mavlink-real
+
+services:
+  mavlink_vehicle:
+    image: anomaly-detector-mavlink-base:latest
+    platform: linux/amd64
+    container_name: anomaly_mavlink_real_vehicle
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["/workspace/scripts/mavlink_real/run_vehicle.sh"]
+    volumes:
+      - ..:/workspace
+      - ${MAVLINK_RUNTIME_HOST_ROOT:-../gds/mavlink_runtime}:/runtime_root
+      - ${MAVLINK_AUTOPILOT_HOST_ROOT:-../gds/mavlink_project/ardupilot}:/ardupilot
+    environment:
+      MAVLINK_RUNTIME_ROOT: /runtime_root
+      MAVLINK_AUTOPILOT_ROOT: /ardupilot
+      MAVLINK_GCS_HOST: mavlink_gcs
+      MAVLINK_GCS_UDP_PORT: 14550
+      MAVLINK_IDENTITY_TCP_PORT: 5760
+    networks:
+      mavlink_real_net:
+        ipv4_address: 192.168.164.2
+    ports:
+      - "5760:5760/tcp"
+    restart: unless-stopped
+
+  mavlink_gcs:
+    image: anomaly-detector-mavlink-base:latest
+    platform: linux/amd64
+    container_name: anomaly_mavlink_real_gcs
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["/workspace/scripts/mavlink_real/run_gcs.sh"]
+    depends_on:
+      - mavlink_vehicle
+    volumes:
+      - ..:/workspace
+      - ${MAVLINK_RUNTIME_HOST_ROOT:-../gds/mavlink_runtime}:/runtime_root
+      - ${MAVLINK_AUTOPILOT_HOST_ROOT:-../gds/mavlink_project/ardupilot}:/ardupilot
+    environment:
+      MAVLINK_RUNTIME_ROOT: /runtime_root
+      MAVLINK_GCS_MASTER_ENDPOINT: udpin:0.0.0.0:14550
+      MAVLINK_AIRCRAFT_NAME: poster_mavlink_vehicle
+    networks:
+      mavlink_real_net:
+        ipv4_address: 192.168.164.3
+    restart: unless-stopped
+
+  ops_primary:
+    image: anomaly-detector-mavlink-base:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${MAVLINK_RUNTIME_HOST_ROOT:-../gds/mavlink_runtime}:/runtime_root
+      - ${MAVLINK_AUTOPILOT_HOST_ROOT:-../gds/mavlink_project/ardupilot}:/ardupilot
+    networks:
+      mavlink_real_net:
+        ipv4_address: 192.168.164.12
+    restart: unless-stopped
+
+  ops_secondary:
+    image: anomaly-detector-mavlink-base:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${MAVLINK_RUNTIME_HOST_ROOT:-../gds/mavlink_runtime}:/runtime_root
+      - ${MAVLINK_AUTOPILOT_HOST_ROOT:-../gds/mavlink_project/ardupilot}:/ardupilot
+    networks:
+      mavlink_real_net:
+        ipv4_address: 192.168.164.13
+    restart: unless-stopped
+
+  red_primary:
+    image: anomaly-detector-mavlink-base:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${MAVLINK_RUNTIME_HOST_ROOT:-../gds/mavlink_runtime}:/runtime_root
+      - ${MAVLINK_AUTOPILOT_HOST_ROOT:-../gds/mavlink_project/ardupilot}:/ardupilot
+    networks:
+      mavlink_real_net:
+        ipv4_address: 192.168.164.22
+    restart: unless-stopped
+
+  red_secondary:
+    image: anomaly-detector-mavlink-base:latest
+    platform: linux/amd64
+    working_dir: /workspace
+    entrypoint: ["/bin/bash", "-lc"]
+    command: ["sleep infinity"]
+    volumes:
+      - ..:/workspace
+      - ${MAVLINK_RUNTIME_HOST_ROOT:-../gds/mavlink_runtime}:/runtime_root
+      - ${MAVLINK_AUTOPILOT_HOST_ROOT:-../gds/mavlink_project/ardupilot}:/ardupilot
+    networks:
+      mavlink_real_net:
+        ipv4_address: 192.168.164.23
+    restart: unless-stopped
+
+networks:
+  mavlink_real_net:
+    name: mavlink_real_net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.164.0/24

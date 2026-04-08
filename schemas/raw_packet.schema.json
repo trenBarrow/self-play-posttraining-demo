@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://poster.local/schemas/raw_packet.schema.json",
+  "title": "Protocol-General Raw Packet Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_kind",
+    "protocol_family",
+    "protocol_version",
+    "platform_family",
+    "message_family",
+    "message_stage",
+    "sender",
+    "target",
+    "command",
+    "timing",
+    "transport",
+    "provenance",
+    "outcome",
+    "correlation",
+    "evaluation_context",
+    "native_payload",
+    "native_fields"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "raw_packet.v1"
+    },
+    "record_kind": {
+      "const": "raw_packet"
+    },
+    "protocol_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol_version": {
+      "type": ["string", "null"]
+    },
+    "platform_family": {
+      "type": ["string", "null"]
+    },
+    "message_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "message_stage": {
+      "type": ["string", "null"]
+    },
+    "sender": {
+      "$ref": "#/$defs/identity"
+    },
+    "target": {
+      "$ref": "#/$defs/target"
+    },
+    "command": {
+      "anyOf": [
+        { "$ref": "#/$defs/command" },
+        { "type": "null" }
+      ]
+    },
+    "timing": {
+      "$ref": "#/$defs/packetTiming"
+    },
+    "transport": {
+      "$ref": "#/$defs/packetTransport"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "outcome": {
+      "anyOf": [
+        { "$ref": "#/$defs/outcome" },
+        { "type": "null" }
+      ]
+    },
+    "correlation": {
+      "$ref": "#/$defs/correlation"
+    },
+    "evaluation_context": {
+      "$ref": "#/$defs/evaluationContext"
+    },
+    "native_payload": {},
+    "native_fields": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "networkEndpoint": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["host", "ip", "port", "transport_family"],
+      "properties": {
+        "host": { "type": ["string", "null"] },
+        "ip": { "type": ["string", "null"] },
+        "port": { "type": ["integer", "null"] },
+        "transport_family": { "type": ["string", "null"] }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["logical_id", "role", "trust_score", "network_endpoint"],
+      "properties": {
+        "logical_id": { "type": "string", "minLength": 1 },
+        "role": { "type": ["string", "null"] },
+        "trust_score": { "type": ["number", "null"] },
+        "network_endpoint": { "$ref": "#/$defs/networkEndpoint" }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["logical_id", "role", "stream_id", "stream_index", "network_endpoint"],
+      "properties": {
+        "logical_id": { "type": "string", "minLength": 1 },
+        "role": { "type": ["string", "null"] },
+        "stream_id": { "type": ["string", "null"] },
+        "stream_index": { "type": ["integer", "null"] },
+        "network_endpoint": { "$ref": "#/$defs/networkEndpoint" }
+      }
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["raw_name", "raw_identifier", "raw_arguments", "raw_argument_representation"],
+      "properties": {
+        "raw_name": { "type": ["string", "null"] },
+        "raw_identifier": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["service_name", "native_service_id", "native_command_id"],
+          "properties": {
+            "service_name": { "type": ["string", "null"] },
+            "native_service_id": { "type": ["number", "null"] },
+            "native_command_id": { "type": ["number", "null"] }
+          }
+        },
+        "raw_arguments": {},
+        "raw_argument_representation": {}
+      }
+    },
+    "packetTiming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observed_at_ms", "timestamp_source"],
+      "properties": {
+        "observed_at_ms": { "type": "number" },
+        "timestamp_source": { "type": ["string", "null"] }
+      }
+    },
+    "packetTransport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transport_family",
+        "bytes_on_wire",
+        "bytes_source",
+        "src_ip",
+        "src_port",
+        "dst_ip",
+        "dst_port"
+      ],
+      "properties": {
+        "transport_family": { "type": ["string", "null"] },
+        "bytes_on_wire": { "type": ["number", "null"] },
+        "bytes_source": { "type": ["string", "null"] },
+        "src_ip": { "type": ["string", "null"] },
+        "src_port": { "type": ["integer", "null"] },
+        "dst_ip": { "type": ["string", "null"] },
+        "dst_port": { "type": ["integer", "null"] }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observed_on_wire",
+        "capture_backend",
+        "capture_interface",
+        "timestamp_source",
+        "bytes_source",
+        "source_artifact_paths"
+      ],
+      "properties": {
+        "observed_on_wire": { "type": "boolean" },
+        "capture_backend": { "type": ["string", "null"] },
+        "capture_interface": { "type": ["string", "null"] },
+        "timestamp_source": { "type": ["string", "null"] },
+        "bytes_source": { "type": ["string", "null"] },
+        "source_artifact_paths": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "accepted",
+        "executed_successfully",
+        "timed_out",
+        "raw_code",
+        "raw_reason",
+        "warning_count",
+        "error_count",
+        "response_direction_seen",
+        "terminal_observed_on_wire",
+        "raw_event_name"
+      ],
+      "properties": {
+        "accepted": { "type": ["boolean", "null"] },
+        "executed_successfully": { "type": ["boolean", "null"] },
+        "timed_out": { "type": ["boolean", "null"] },
+        "raw_code": { "type": ["number", "null"] },
+        "raw_reason": { "type": ["string", "null"] },
+        "warning_count": { "type": ["number", "null"] },
+        "error_count": { "type": ["number", "null"] },
+        "response_direction_seen": { "type": ["boolean", "null"] },
+        "terminal_observed_on_wire": { "type": ["boolean", "null"] },
+        "raw_event_name": { "type": ["string", "null"] }
+      }
+    },
+    "correlation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "episode_id", "session_id", "transaction_id", "send_id", "stream_id", "stream_index"],
+      "properties": {
+        "run_id": { "type": ["integer", "null"] },
+        "episode_id": { "type": ["integer", "null"] },
+        "session_id": { "type": ["string", "null"] },
+        "transaction_id": { "type": ["string", "null"] },
+        "send_id": { "type": ["string", "null"] },
+        "stream_id": { "type": ["string", "null"] },
+        "stream_index": { "type": ["integer", "null"] }
+      }
+    },
+    "evaluationContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "label_name", "attack_family", "phase", "actor_id", "actor_role", "actor_trust"],
+      "properties": {
+        "label": { "type": ["integer", "null"] },
+        "label_name": { "type": ["string", "null"] },
+        "attack_family": { "type": ["string", "null"] },
+        "phase": { "type": ["string", "null"] },
+        "actor_id": { "type": ["string", "null"] },
+        "actor_role": { "type": ["string", "null"] },
+        "actor_trust": { "type": ["number", "null"] }
+      }
+    }
+  }
+}

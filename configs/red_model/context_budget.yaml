@@ -1,0 +1,76 @@
+schema_version: red_context_budget.v1
+record_kind: red_context_budget
+transcript_schema_version: red_command_transcript.v1
+transcript_format:
+  name: compact_categorical_line_v1
+  header_field_order:
+    - protocol_family
+    - platform_family
+  per_event_field_order:
+    - canonical_command_family
+    - actor_identity_bucket
+    - actor_role
+    - trust_class
+    - mission_phase
+    - window_class
+    - coarse_result_class
+    - mutation_scope
+    - persistence_class
+    - safety_criticality
+    - authority_level
+    - target_scope
+    - argument_size_bucket
+  token_prefixes:
+    protocol_family: pf
+    platform_family: pl
+    canonical_command_family: cf
+    actor_identity_bucket: ib
+    actor_role: ar
+    trust_class: tc
+    mission_phase: mp
+    window_class: wc
+    coarse_result_class: rc
+    mutation_scope: mu
+    persistence_class: pe
+    safety_criticality: sc
+    authority_level: au
+    target_scope: ts
+    argument_size_bucket: ab
+  special_tokens:
+    header_start: <ctx>
+    header_end: </ctx>
+    event_start: <cmd>
+    event_end: </cmd>
+limits:
+  max_history_entries: 8
+  truncation_policy: keep_most_recent_preserve_order
+  include_header_tokens: true
+  token_id_modulo: 65535
+defaults:
+  unknown_category: unknown
+  mixed_category: mixed
+buckets:
+  argument_leaf_count:
+    none_max: 0
+    single_max: 1
+    few_max: 3
+    medium_max: 6
+    labels:
+      none: none
+      single: single
+      few: few
+      medium: medium
+      many: many
+  actor_identity:
+    self_label: self
+    ally_label: ally
+    other_label: other
+    unknown_label: unknown
+  coarse_result_class:
+    success_label: success
+    warning_label: warning
+    rejected_label: rejected
+    failed_label: failed
+    timeout_label: timeout
+    invalid_label: invalid
+    unknown_label: unknown

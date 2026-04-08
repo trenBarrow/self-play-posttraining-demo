@@ -1,0 +1,111 @@
+schema_version: blue_feature_allowlist.v1
+profiles:
+  poster_blue_default:
+    description: >
+      Poster-default blue detector policy over canonical semantic rows.
+      Feature sets may use any subset of these fields for ablation, but they may
+      not step outside this allowlist.
+    allowed_features:
+      - platform_family
+      - actor_context.role
+      - actor_context.trust_class
+      - mission_context.mission_phase
+      - mission_context.window_class
+      - command_semantics.canonical_command_name
+      - command_semantics.canonical_command_family
+      - command_semantics.mutation_scope
+      - command_semantics.persistence_class
+      - command_semantics.safety_criticality
+      - command_semantics.authority_level
+      - command_semantics.target_scope
+      - argument_profile.has_arguments
+      - argument_profile.argument_leaf_count
+      - argument_profile.numeric_argument_count
+      - argument_profile.string_argument_count
+      - argument_profile.boolean_argument_count
+      - argument_profile.collection_argument_count
+      - argument_profile.null_argument_count
+      - argument_profile.numeric_magnitude_l1
+      - normalized_state.state_available
+      - normalized_state.target_state_present
+      - normalized_state.peer_state_present
+      - normalized_state.target_compute_load_ratio
+      - normalized_state.peer_compute_load_ratio
+      - normalized_state.target_compute_peak_load_ratio
+      - normalized_state.peer_compute_peak_load_ratio
+      - normalized_state.target_compute_imbalance_ratio
+      - normalized_state.peer_compute_imbalance_ratio
+      - normalized_state.target_storage_io_pressure_ratio
+      - normalized_state.peer_storage_io_pressure_ratio
+      - normalized_state.target_command_activity_ratio
+      - normalized_state.peer_command_activity_ratio
+      - normalized_state.target_command_error_ratio
+      - normalized_state.peer_command_error_ratio
+      - normalized_state.target_service_issue_ratio
+      - normalized_state.peer_service_issue_ratio
+      - normalized_state.target_queue_pressure_ratio
+      - normalized_state.peer_queue_pressure_ratio
+      - normalized_state.target_scheduler_pressure_ratio
+      - normalized_state.peer_scheduler_pressure_ratio
+      - normalized_state.target_link_pressure_ratio
+      - normalized_state.peer_link_pressure_ratio
+      - normalized_state.target_power_pressure_ratio
+      - normalized_state.peer_power_pressure_ratio
+      - normalized_state.target_control_instability_ratio
+      - normalized_state.peer_control_instability_ratio
+      - normalized_state.target_navigation_uncertainty_ratio
+      - normalized_state.peer_navigation_uncertainty_ratio
+      - normalized_state.target_telemetry_staleness_ratio
+      - normalized_state.peer_telemetry_staleness_ratio
+      - recent_behavior.command_rate_1m
+      - recent_behavior.error_rate_1m
+      - recent_behavior.repeat_command_count_10m
+      - recent_behavior.same_target_command_rate_1m
+  legacy_request_time_baseline:
+    description: >
+      Preserved legacy F´ request-time baseline policy for the pre-poster training
+      path. This profile exists so the legacy path remains explicit and auditable
+      until canonical poster training replaces it.
+    allowed_features:
+      - service_id
+      - command_id
+      - target_node_id
+      - actor_trust
+      - arg_count
+      - arg_norm
+      - arg_out_of_range
+      - req_bytes
+      - target_cpu_total_pct
+      - target_cpu_00_pct
+      - target_cpu_01_pct
+      - target_blockdrv_cycles_total
+      - target_blockdrv_cycles_1m
+      - target_cmds_dispatched_total
+      - target_cmds_dispatched_1m
+      - target_cmd_errors_total
+      - target_cmd_errors_1m
+      - target_filedownlink_warnings_total
+      - target_filedownlink_warnings_1m
+      - target_filemanager_errors_total
+      - target_filemanager_errors_1m
+      - target_hibuffs_total
+      - target_rg1_max_time_ms
+      - target_rg2_max_time_ms
+      - target_telemetry_age_ms
+      - peer_cpu_total_pct
+      - peer_cpu_00_pct
+      - peer_cpu_01_pct
+      - peer_blockdrv_cycles_total
+      - peer_blockdrv_cycles_1m
+      - peer_cmds_dispatched_total
+      - peer_cmds_dispatched_1m
+      - peer_cmd_errors_total
+      - peer_cmd_errors_1m
+      - peer_filedownlink_warnings_total
+      - peer_filedownlink_warnings_1m
+      - peer_filemanager_errors_total
+      - peer_filemanager_errors_1m
+      - peer_hibuffs_total
+      - peer_rg1_max_time_ms
+      - peer_rg2_max_time_ms
+      - peer_telemetry_age_ms

@@ -1,0 +1,27 @@
+{
+  "bundle_schema_version": "detector_runtime_bundle.v1",
+  "runtime_kind": "poster_blue_single_model_v1",
+  "runtime_api": "poster_blue_runtime.v1",
+  "training_path": "poster_default_canonical",
+  "primary_model_artifact": "blue_model.json",
+  "feature_tier": "poster_canonical_request",
+  "class_names": [
+    "benign",
+    "cyber",
+    "fault"
+  ],
+  "score_outputs": [
+    "pbenign",
+    "pcyber",
+    "pfault",
+    "panomaly",
+    "anomaly_score",
+    "unsafe_risk",
+    "risk",
+    "predicted_class",
+    "detector_reason"
+  ],
+  "uses_rules": false,
+  "uses_novelty": false,
+  "uses_calibrator": false
+}
